@@ -10,7 +10,7 @@ import java.util.*
  * P - параметры (во фрагментах это будет Bundle)
  * @param stateSwitchHandler - интерфейс для обработки переключения состояний / фрагментов
  */
-class SwitchStateNavigator<E : Enum<*>, P>(var stateSwitchHandler: StateSwitchHandler<E, P>)
+class SwitchStateNavigator<E, P>(var stateSwitchHandler: StateSwitchHandler<E, P>)
     : StateNavigator<E, P>, StateSwitchHandler<E, P> {
 
     private var commandsQueue: Deque<SwitchStateOperation<E, P>> = ArrayDeque<SwitchStateOperation<E, P>>()

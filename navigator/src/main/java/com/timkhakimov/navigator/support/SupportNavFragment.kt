@@ -10,7 +10,7 @@ import java.util.*
 /**
  * Created by Timur Khakimov on 05.08.2019.
  */
-abstract class SupportNavFragment<E : Enum<*>> : Fragment(), NavFragment<E> {
+abstract class SupportNavFragment<E> : Fragment(), NavFragment<E> {
 
     protected var navigator: StateNavigator<E, Bundle>? = null
 

@@ -7,7 +7,7 @@ package com.timkhakimov.navigator.base
  * E - константа, соответствующая какому-то состоянию/фрагменту
  * P - параметры (во фрагментах это будет Bundle)
  */
-interface StateSwitchHandler<E : Enum<*>, P> {
+interface StateSwitchHandler<E, P> {
     fun back(params: P?)                        //вернуть предыдущее состояние / вернуться на один фрагмент назад
     fun backTo(fragmentState: E, params: P?)   //извлекать из стека состояния/фрагменты до тех пор, пока не найдется нужный
     fun replace(fragmentState: E, params: P?)   //удалить текущее состояние / фрагмент из стека, добавить новое / новый и переключить на него

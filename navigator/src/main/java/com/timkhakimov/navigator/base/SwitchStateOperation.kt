@@ -6,7 +6,7 @@ package com.timkhakimov.navigator.base
  * E - константа, соответствующая какому-то состоянию/фрагменту
  * P - параметры (во фрагментах это будет Bundle)
  */
-class SwitchStateOperation<E : Enum<*>, P>(
+class SwitchStateOperation<E, P>(
         var direction: SwitchStateDirection,
         var state: E?,
         var params: P?)

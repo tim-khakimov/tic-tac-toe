@@ -9,8 +9,8 @@ import com.timkhakimov.navigator.NavFragmentFactory
  * Created by Timur Khakimov on 05.08.2019.
  */
 class SupportNavFragmentSwitchHandler<E : Enum<*>, F : SupportNavFragment<E>>(fragmentManager: FragmentManager,
-                                                                                                                containerId: Int,
-                                                                                                                navFragmentFactory: NavFragmentFactory<E, F>)
+                                                                              containerId: Int,
+                                                                              navFragmentFactory: NavFragmentFactory<E, F>)
     : NavFragmentSwitchHandler<E, F, FragmentManager>(fragmentManager, containerId, navFragmentFactory) {
 
     override fun back(bundle: Bundle?) {

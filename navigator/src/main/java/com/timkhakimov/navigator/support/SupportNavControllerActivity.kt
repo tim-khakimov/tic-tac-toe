@@ -35,5 +35,5 @@ abstract class SupportNavControllerActivity<E : Enum<*>, F : SupportNavFragment<
         return fragmentFactory
     }
 
-    abstract fun createFragmentsFactory() : NavFragmentFactory<E, F>
+    abstract fun createFragmentsFactory(): NavFragmentFactory<E, F>
 }

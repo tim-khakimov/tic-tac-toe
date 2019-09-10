@@ -6,6 +6,6 @@ package com.timkhakimov.navigator.base
  * E - константа, соответствующая какому-то состоянию/фрагменту
  * F - состояние / экземпляр / фрагмент - соответствующий этой константе
  */
-interface StateFactory<E : Enum<*>, F> {
+interface StateFactory<E, F> {
     fun newInstance(state: E): F
 }

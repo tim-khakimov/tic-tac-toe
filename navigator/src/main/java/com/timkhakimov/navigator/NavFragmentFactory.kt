@@ -16,7 +16,7 @@ import com.timkhakimov.navigator.base.StateNavigator
  * В активити создаем экземпляр класса SwitchStateNavigator, который имплементирует интерфейс StateNavigator, ссылку на него сохраняем в качестве поля класса активити и устанавливаем его (навигатор) сюда
  * Если нужно будет использовать для переключения фрагментов внутри фрагментов - то фабрику и навгиатор создаем и храним в основном фрагменте, в остальном все то же самое
  */
-abstract class NavFragmentFactory<E : Enum<*>, F : NavFragment<E>> : StateFactory<E, F> {
+abstract class NavFragmentFactory<E, F : NavFragment<E>> : StateFactory<E, F> {
 
     var fragmentsNavigator: StateNavigator<E, Bundle>? = null
 

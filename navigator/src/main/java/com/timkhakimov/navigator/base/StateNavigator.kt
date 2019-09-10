@@ -16,7 +16,7 @@ import java.util.*
  * E - константа, соответствующая какому-то состоянию/фрагменту
  * P - параметры (во фрагментах это будет Bundle)
  */
-interface StateNavigator<E : Enum<*>, P> {
+interface StateNavigator<E, P> {
     fun addSwitchStateOperation(direction: SwitchStateDirection, state: E?, params: P?)     //создать команду из параметров и добавить в очередь
     fun addSwitchStateOperation(operation: SwitchStateOperation<E, P>)                      //добавить команду в очередь
     fun getCurrentState(): E?                                                               //текущее состояние из вершины стека
