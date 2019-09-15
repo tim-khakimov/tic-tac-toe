@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <TextView
+        android:id="@+id/tvMark"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:background="@drawable/clickable_rect_white_gray_da"
+        android:enabled="@{gameCell.isAvailableForPlayer}"
+        android:gravity="center"
+        android:onClick="@{()-> gameCell.markCell()}"
+        android:textColor="@color/red_e0"
+        android:textSize="@dimen/text_36"
+        android:textStyle="bold"
+        app:playerMark="@{gameCell.playerMark}" />
+
+    <data>
+
+        <variable
+            name="gameCell"
+            type="com.timkhakimov.tictactoe.model.GameCell" />
+    </data>
+</layout>

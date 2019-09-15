@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">TicTacToe</string>
     <string name="action_settings">Settings</string>
+
+    <string name="cross">X</string>
+    <string name="nought">O</string>
 </resources>
