@@ -10,20 +10,25 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.timkhakimov.navigator.base.SwitchStateDirection
 import com.timkhakimov.navigator.support.SupportNavFragment
 import com.timkhakimov.tictactoe.fragments.navigation.FragmentType
+import com.timkhakimov.tictactoe.fragments.navigation.FragmentsSwitcher
 import com.timkhakimov.tictactoe.viewmodel.BaseViewModel
+import com.timkhakimov.tictactoe.viewmodel.MainViewModel
 
 /**
  * Created by Timur Khakimov on 10.09.2019
  * parent class for all fragments
  */
-abstract class BaseFragment<B : ViewDataBinding> : SupportNavFragment<FragmentType>() {
+abstract class BaseFragment<B : ViewDataBinding> : SupportNavFragment<FragmentType>(), FragmentsSwitcher {
 
+    protected lateinit var mainViewModel: MainViewModel
     protected lateinit var binding : B
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        mainViewModel = getViewModel(MainViewModel::class.java)
         onFragmentCreated(savedInstanceState)
     }
 
@@ -52,5 +57,17 @@ abstract class BaseFragment<B : ViewDataBinding> : SupportNavFragment<FragmentTy
             switchStateCommands?.let { setFragmentsSwitchCommandsFromQueue(it) }
         })
         return viewModel
+    }
+
+    override fun back() {
+        mainViewModel.back()
+    }
+
+    override fun switchFragment(fragmentType: FragmentType) {
+        mainViewModel.switchFragment(fragmentType)
+    }
+
+    override fun switchFragment(fragmentType: FragmentType, direction: SwitchStateDirection, bundle: Bundle?) {
+        mainViewModel.switchFragment(fragmentType, direction, bundle)
     }
 }
