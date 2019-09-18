@@ -7,6 +7,8 @@ import com.timkhakimov.tictactoe.game.model.Point;
 import com.timkhakimov.tictactoe.game.observer.PointObservable;
 import com.timkhakimov.tictactoe.game.observer.PointObserver;
 
+import org.jetbrains.annotations.Nullable;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
@@ -23,8 +25,8 @@ public class Game implements PointObservable {
     private boolean isDraw = false;
     private List<PointObserver> observers;
 
-    public Game(int size) {
-        this.board = GameUtils.createBoard(size);
+    public Game(Cell[][] board) {
+        this.board = board;
         movesStack = new Stack<>();
         observers = new ArrayList<>();
     }
@@ -47,7 +49,7 @@ public class Game implements PointObservable {
         notifyObservers(lastMovePoint.getRow(), lastMovePoint.getColumn());
     }
 
-    private Player getCurrentPlayer() {
+    public Player getCurrentPlayer() {
         return movesStack.size() % 2 == 0 ? Player.CROSS : Player.NOUGHT;
     }
 
@@ -59,8 +61,12 @@ public class Game implements PointObservable {
         return isFinished;
     }
 
-    public boolean isDraw() {
-        return isDraw;
+    @Nullable
+    public Player getWinner() {
+        if(isDraw) {
+            return null;
+        }
+        return getCurrentPlayer() == Player.CROSS ? Player.NOUGHT : Player.CROSS;
     }
 
     @Override
