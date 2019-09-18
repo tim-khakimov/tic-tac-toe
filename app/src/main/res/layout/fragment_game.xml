@@ -3,6 +3,12 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <data>
+        <variable
+            name="currentPlayer"
+            type="com.timkhakimov.tictactoe.game.model.Player" />
+    </data>
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -32,7 +38,8 @@
             android:layout_gravity="center"
             android:textColor="@color/blue_4d"
             android:textSize="@dimen/text_24"
-            tools:text="X" />
+            tools:text="X"
+            app:playerMark="@{currentPlayer}"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/rvSpaces"

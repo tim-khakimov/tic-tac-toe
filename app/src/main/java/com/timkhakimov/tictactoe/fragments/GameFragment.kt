@@ -1,5 +1,6 @@
 package com.timkhakimov.tictactoe.fragments
 
+import android.arch.lifecycle.Observer
 import android.support.v7.widget.GridLayoutManager
 import android.view.View
 import com.timkhakimov.tictactoe.R
@@ -7,6 +8,7 @@ import com.timkhakimov.tictactoe.adapter.GameCellsAdapter
 import com.timkhakimov.tictactoe.databinding.FragmentGameBinding
 import com.timkhakimov.tictactoe.fragments.navigation.FragmentType
 import com.timkhakimov.tictactoe.game.Game
+import com.timkhakimov.tictactoe.game.model.Player
 import com.timkhakimov.tictactoe.game.observer.PointObserver
 import com.timkhakimov.tictactoe.model.GameCell
 
@@ -16,8 +18,8 @@ import com.timkhakimov.tictactoe.model.GameCell
  */
 class GameFragment : BaseFragment<FragmentGameBinding>() {
 
-    private val adapter : GameCellsAdapter
-    private val pointObserver : PointObserver
+    private val adapter: GameCellsAdapter
+    private val pointObserver: PointObserver
 
     init {
         adapter = GameCellsAdapter()
@@ -35,20 +37,46 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
     }
 
     override fun onViewCreated(root: View) {
-
+        setClickListeners()
+        observeToGame()
     }
 
-    private fun setGameCells(game : Game) {
+    private fun setClickListeners() {
+        binding.tvUndo.setOnClickListener { mainViewModel.gameLiveData.value?.undoLastMove() }
+    }
+
+    private fun observeToGame() {
+        mainViewModel.gameLiveData.observe(this, Observer { game ->
+            if (game != null) {
+                game.addObserver(pointObserver)
+                setGameCells(game)
+                updateGameState()
+            }
+        })
+    }
+
+    private fun setGameCells(game: Game) {
         binding.rvSpaces.adapter = adapter
         binding.rvSpaces.layoutManager = GridLayoutManager(requireContext(), game.board.size)
         adapter.items = createGameCells(game)
     }
 
     private fun updateGameState() {
-        //todo update current player title and result status
+        mainViewModel.gameLiveData.value?.let {
+            updateCurrentPlayer(it.currentPlayer)
+            updateResultStatus(it.isFinished, it.winner)
+        }
     }
 
-    private fun createGameCells(game: Game) : List<GameCell> {
+    private fun updateCurrentPlayer(player: Player) {
+        binding.currentPlayer = player
+    }
+
+    private fun updateResultStatus(isFinished: Boolean, winner: Player?) {
+        //todo update result status
+    }
+
+    private fun createGameCells(game: Game): List<GameCell> {
         val gameCells = mutableListOf<GameCell>()
         for (row in 0 until game.board.size) {
             for (column in 0 until game.board[0].size) {
@@ -60,7 +88,7 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
 
     override fun onDestroy() {
         adapter.removeCellObserver()
-        //todo remove this.pointObserver from game
+        mainViewModel.gameLiveData.value?.removeObserver(pointObserver)
         super.onDestroy()
     }
 }
