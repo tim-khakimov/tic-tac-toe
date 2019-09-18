@@ -3,9 +3,9 @@ package com.timkhakimov.navigator.support
 import android.os.Bundle
 import android.support.v4.app.Fragment
 import com.timkhakimov.navigator.NavFragment
+import com.timkhakimov.navigator.base.Queue
 import com.timkhakimov.navigator.base.StateNavigator
 import com.timkhakimov.navigator.base.SwitchStateOperation
-import java.util.*
 
 /**
  * Created by Timur Khakimov on 05.08.2019.
@@ -14,12 +14,13 @@ abstract class SupportNavFragment<E> : Fragment(), NavFragment<E> {
 
     protected var navigator: StateNavigator<E, Bundle>? = null
 
-    override fun setFragmentsSwitchCommandsFromQueue(switchStateCommandsDeque: Deque<SwitchStateOperation<E, Bundle>>) {
+    override fun setFragmentsSwitchCommandsFromQueue(switchStateCommandsQueue: Queue<SwitchStateOperation<E, Bundle>>) {
         if(navigator == null) {
             return
         }
-        while (!switchStateCommandsDeque.isEmpty()) {
-            navigator!!.addSwitchStateOperation(switchStateCommandsDeque.removeFirst())
+        var queue = switchStateCommandsQueue.removeAll()
+        while (!switchStateCommandsQueue.isEmpty()) {
+            navigator!!.addSwitchStateOperation(queue.remove())
         }
         navigator!!.handleOperations()
     }
