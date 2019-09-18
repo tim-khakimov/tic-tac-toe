@@ -13,7 +13,7 @@ import java.util.*
 class SwitchStateNavigator<E, P>(var stateSwitchHandler: StateSwitchHandler<E, P>)
     : StateNavigator<E, P>, StateSwitchHandler<E, P> {
 
-    private var commandsQueue: Deque<SwitchStateOperation<E, P>> = ArrayDeque<SwitchStateOperation<E, P>>()
+    private var commandsQueue: Queue<SwitchStateOperation<E, P>> = Queue<SwitchStateOperation<E, P>>()
     private var statesStack: Stack<E> = Stack()
     private var stateChangeListeners = mutableListOf<OnStateChangeListener<E>>()
 
@@ -22,7 +22,7 @@ class SwitchStateNavigator<E, P>(var stateSwitchHandler: StateSwitchHandler<E, P
     }
 
     override fun addSwitchStateOperation(operation: SwitchStateOperation<E, P>) {
-        commandsQueue.addLast(operation)
+        commandsQueue.add(operation)
     }
 
     override fun getCurrentState(): E? {
@@ -33,7 +33,6 @@ class SwitchStateNavigator<E, P>(var stateSwitchHandler: StateSwitchHandler<E, P
     }
 
     override fun copyStatesStack(): Stack<E> {
-
         var tempStack = Stack<E>()
         while (!statesStack.isEmpty()) {
             tempStack.push(statesStack.pop())
@@ -58,7 +57,7 @@ class SwitchStateNavigator<E, P>(var stateSwitchHandler: StateSwitchHandler<E, P
     }
 
     override fun handleNextOperation() {
-        handleOperation(commandsQueue.removeFirst())
+        handleOperation(commandsQueue.remove())
     }
 
     override fun handleOperation(operation: SwitchStateOperation<E, P>) {
