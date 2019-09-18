@@ -36,7 +36,7 @@ public class Game implements PointObservable {
         notifyObservers(row, column);
     }
 
-    public void cancelLastMove() {
+    public void undoLastMove() {
         if (movesStack.isEmpty()) {
             return;
         }
@@ -44,6 +44,7 @@ public class Game implements PointObservable {
         isDraw = false;
         Point lastMovePoint = movesStack.pop();
         board[lastMovePoint.getRow()][lastMovePoint.getColumn()].setPlayerMark(null);
+        notifyObservers(lastMovePoint.getRow(), lastMovePoint.getColumn());
     }
 
     private Player getCurrentPlayer() {
@@ -56,6 +57,10 @@ public class Game implements PointObservable {
 
     public boolean isFinished() {
         return isFinished;
+    }
+
+    public boolean isDraw() {
+        return isDraw;
     }
 
     @Override

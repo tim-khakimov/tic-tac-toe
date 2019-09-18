@@ -2,6 +2,12 @@
 <layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
+    <data>
+        <variable
+            name="gameCell"
+            type="com.timkhakimov.tictactoe.model.GameCell" />
+    </data>
+
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -14,11 +20,4 @@
         android:textSize="@dimen/text_36"
         android:textStyle="bold"
         app:playerMark="@{gameCell.playerMark}" />
-
-    <data>
-
-        <variable
-            name="gameCell"
-            type="com.timkhakimov.tictactoe.model.GameCell" />
-    </data>
 </layout>
