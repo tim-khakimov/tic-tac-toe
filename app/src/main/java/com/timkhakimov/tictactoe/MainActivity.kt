@@ -17,6 +17,7 @@ class MainActivity : SupportNavControllerActivity<FragmentType, BaseFragment<*>>
         super.onCreate(savedInstanceState)
         mainViewModel = ViewModelProvider(this, ViewModelProvider.AndroidViewModelFactory(application)).get(MainViewModel::class.java)
         setContentView(R.layout.activity_main)
+        fragmentsNavigator.forward(FragmentType.START, null)
     }
 
     override fun createFragmentsFactory(): NavFragmentFactory<FragmentType, BaseFragment<*>> {

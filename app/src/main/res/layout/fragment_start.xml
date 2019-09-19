@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/white"
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="@dimen/size_32"
+            android:textAllCaps="true"
+            android:textColor="@color/black"
+            android:fontFamily="sans-serif-medium"
+            android:text="@string/choose_mode"
+            android:textSize="@dimen/text_24" />
+
+        <TextView
+            android:id="@+id/tvTwoPlayers"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_48"
+            android:layout_marginTop="@dimen/size_32"
+            android:layout_marginRight="@dimen/size_48"
+            android:background="@drawable/clickable_rect_r8_gray_da_white"
+            android:gravity="center"
+            android:paddingTop="@dimen/size_8"
+            android:paddingBottom="@dimen/size_8"
+            android:text="@string/two_players"
+            android:textColor="@color/blue_4d"
+            android:textSize="@dimen/text_24"
+            android:textStyle="bold" />
+
+    </LinearLayout>
+</layout>

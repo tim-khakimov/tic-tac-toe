@@ -5,6 +5,10 @@
     <dimen name="text_24">24sp</dimen>
     <dimen name="text_36">36sp</dimen>
 
+    <dimen name="size_8">8dp</dimen>
+    <dimen name="size_16">16dp</dimen>
     <dimen name="size_24">24dp</dimen>
     <dimen name="size_32">32dp</dimen>
+    <dimen name="size_48">48dp</dimen>
+    <dimen name="size_64">64dp</dimen>
 </resources>

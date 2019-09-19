@@ -54,6 +54,7 @@ abstract class BaseFragment<B : ViewDataBinding> : SupportNavFragment<FragmentTy
         val viewModelProvider = ViewModelProvider(activity!!, ViewModelProvider.AndroidViewModelFactory(activity!!.application))
         val viewModel = viewModelProvider.get(viewModelClass)
         viewModel.switchFragmentOperationsQueueLiveData.observe(this, Observer { switchStateCommands ->
+            System.out.println("BaseFragment : switchFragmentOperationsQueueLiveData.observe")
             switchStateCommands?.let { setFragmentsSwitchCommandsFromQueue(it) }
         })
         return viewModel

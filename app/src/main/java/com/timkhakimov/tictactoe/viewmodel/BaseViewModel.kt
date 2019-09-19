@@ -34,6 +34,7 @@ abstract class BaseViewModel : ViewModel(), FragmentsSwitcher {
     }
 
     private fun addSwitchFragmentOperation(command: SwitchStateOperation<FragmentType, Bundle>) {
+        System.out.println("BaseViewModel : addSwitchFragmentOperation() command.state = " + command.state)
         val queue = switchFragmentOperationsQueueLiveData.value
         queue!!.add(command)
         switchFragmentOperationsQueueLiveData.value = queue
