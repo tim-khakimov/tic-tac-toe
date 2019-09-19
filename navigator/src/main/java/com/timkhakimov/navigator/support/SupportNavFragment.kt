@@ -19,7 +19,7 @@ abstract class SupportNavFragment<E> : Fragment(), NavFragment<E> {
             return
         }
         var queue = switchStateCommandsQueue.removeAll()
-        while (!switchStateCommandsQueue.isEmpty()) {
+        while (!queue.isEmpty()) {
             navigator!!.addSwitchStateOperation(queue.remove())
         }
         navigator!!.handleOperations()
