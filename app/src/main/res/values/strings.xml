@@ -9,4 +9,12 @@
     <string name="current_player">Current player</string>
 
     <string name="undo">Undo</string>
+
+    <string name="game_over">Game over!</string>
+    <string name="winner">Winner:</string>
+    <string name="draw">Draw!</string>
+
+    <string name="choose_mode">Choose mode</string>
+
+    <string name="two_players">2 players</string>
 </resources>

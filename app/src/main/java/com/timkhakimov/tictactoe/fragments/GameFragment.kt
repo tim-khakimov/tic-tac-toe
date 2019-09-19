@@ -8,7 +8,6 @@ import com.timkhakimov.tictactoe.adapter.GameCellsAdapter
 import com.timkhakimov.tictactoe.databinding.FragmentGameBinding
 import com.timkhakimov.tictactoe.fragments.navigation.FragmentType
 import com.timkhakimov.tictactoe.game.Game
-import com.timkhakimov.tictactoe.game.model.Player
 import com.timkhakimov.tictactoe.game.observer.PointObserver
 import com.timkhakimov.tictactoe.model.GameCell
 
@@ -18,11 +17,10 @@ import com.timkhakimov.tictactoe.model.GameCell
  */
 class GameFragment : BaseFragment<FragmentGameBinding>() {
 
-    private val adapter: GameCellsAdapter
+    private val adapter = GameCellsAdapter()
     private val pointObserver: PointObserver
 
     init {
-        adapter = GameCellsAdapter()
         pointObserver = PointObserver { row, column ->
             updateGameState()
         }
@@ -37,15 +35,6 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
     }
 
     override fun onViewCreated(root: View) {
-        setClickListeners()
-        observeToGame()
-    }
-
-    private fun setClickListeners() {
-        binding.tvUndo.setOnClickListener { mainViewModel.gameLiveData.value?.undoLastMove() }
-    }
-
-    private fun observeToGame() {
         mainViewModel.gameLiveData.observe(this, Observer { game ->
             if (game != null) {
                 game.addObserver(pointObserver)
@@ -63,17 +52,8 @@ class GameFragment : BaseFragment<FragmentGameBinding>() {
 
     private fun updateGameState() {
         mainViewModel.gameLiveData.value?.let {
-            updateCurrentPlayer(it.currentPlayer)
-            updateResultStatus(it.isFinished, it.winner)
+            binding.game = it
         }
-    }
-
-    private fun updateCurrentPlayer(player: Player) {
-        binding.currentPlayer = player
-    }
-
-    private fun updateResultStatus(isFinished: Boolean, winner: Player?) {
-        //todo update result status
     }
 
     private fun createGameCells(game: Game): List<GameCell> {
