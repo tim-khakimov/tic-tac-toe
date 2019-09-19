@@ -1,5 +1,7 @@
 package com.timkhakimov.tictactoe.game;
 
+import android.support.annotation.NonNull;
+
 import com.timkhakimov.tictactoe.game.model.Cell;
 import com.timkhakimov.tictactoe.game.model.Player;
 import com.timkhakimov.tictactoe.game.model.PlayerMove;
@@ -19,13 +21,14 @@ import java.util.Stack;
  */
 public class Game implements PointObservable {
 
+    @NonNull
     private Cell[][] board;
     private Stack<Point> movesStack;
     private boolean isFinished = false;
     private boolean isDraw = false;
     private List<PointObserver> observers;
 
-    public Game(Cell[][] board) {
+    public Game(@NonNull Cell[][] board) {
         this.board = board;
         movesStack = new Stack<>();
         observers = new ArrayList<>();
@@ -35,6 +38,13 @@ public class Game implements PointObservable {
         Player player = getCurrentPlayer();
         board[row][column].setPlayerMark(player);
         movesStack.push(new PlayerMove(player, row, column));
+        if(GameUtils.isPlayerWon(board, player, row, column)) {
+            isFinished = true;
+            isDraw = false;
+        } else if(movesStack.size() == board.length * board[0].length) {
+            isFinished = true;
+            isDraw = true;
+        }
         notifyObservers(row, column);
     }
 
@@ -63,7 +73,7 @@ public class Game implements PointObservable {
 
     @Nullable
     public Player getWinner() {
-        if(isDraw) {
+        if (!isFinished || isDraw) {
             return null;
         }
         return getCurrentPlayer() == Player.CROSS ? Player.NOUGHT : Player.CROSS;
