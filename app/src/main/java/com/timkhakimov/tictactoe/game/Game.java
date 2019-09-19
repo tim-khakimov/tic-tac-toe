@@ -23,9 +23,7 @@ public class Game implements PointObservable {
 
     @NonNull
     private Cell[][] board;
-    private Stack<Point> movesStack;
-    private boolean isFinished = false;
-    private boolean isDraw = false;
+    private Stack<PlayerMove> movesStack;
     private List<PointObserver> observers;
 
     public Game(@NonNull Cell[][] board) {
@@ -38,13 +36,6 @@ public class Game implements PointObservable {
         Player player = getCurrentPlayer();
         board[row][column].setPlayerMark(player);
         movesStack.push(new PlayerMove(player, row, column));
-        if(GameUtils.isPlayerWon(board, player, row, column)) {
-            isFinished = true;
-            isDraw = false;
-        } else if(movesStack.size() == board.length * board[0].length) {
-            isFinished = true;
-            isDraw = true;
-        }
         notifyObservers(row, column);
     }
 
@@ -52,8 +43,6 @@ public class Game implements PointObservable {
         if (movesStack.isEmpty()) {
             return;
         }
-        isFinished = false;
-        isDraw = false;
         Point lastMovePoint = movesStack.pop();
         board[lastMovePoint.getRow()][lastMovePoint.getColumn()].setPlayerMark(null);
         notifyObservers(lastMovePoint.getRow(), lastMovePoint.getColumn());
@@ -68,15 +57,23 @@ public class Game implements PointObservable {
     }
 
     public boolean isFinished() {
-        return isFinished;
+        return isBoardFilled() || getWinner() != null;
     }
 
     @Nullable
     public Player getWinner() {
-        if (!isFinished || isDraw) {
+        if(movesStack.size() < board.length * 2 - 1) {
             return null;
         }
-        return getCurrentPlayer() == Player.CROSS ? Player.NOUGHT : Player.CROSS;
+        PlayerMove lastMove = movesStack.peek();
+        if(GameUtils.isPlayerWon(board, lastMove.getPlayer(), lastMove.getRow(), lastMove.getColumn())) {
+            return lastMove.getPlayer();
+        }
+        return null;
+    }
+
+    private boolean isBoardFilled() {
+        return movesStack.size() == board.length * board[0].length;
     }
 
     @Override
