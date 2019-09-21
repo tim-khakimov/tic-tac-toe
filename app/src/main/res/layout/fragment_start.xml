@@ -61,5 +61,21 @@
             android:textSize="@dimen/text_24"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tvComputerOpponentFindBestMoveMinimax"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/size_48"
+            android:layout_marginTop="@dimen/size_16"
+            android:layout_marginRight="@dimen/size_48"
+            android:background="@drawable/clickable_rect_r8_gray_da_white"
+            android:gravity="center"
+            android:paddingTop="@dimen/size_8"
+            android:paddingBottom="@dimen/size_8"
+            android:text="@string/single_player_find_best_move_minimax"
+            android:textColor="@color/blue_4d"
+            android:textSize="@dimen/text_24"
+            android:textStyle="bold" />
+
     </LinearLayout>
 </layout>

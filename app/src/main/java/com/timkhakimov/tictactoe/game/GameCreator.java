@@ -1,8 +1,10 @@
 package com.timkhakimov.tictactoe.game;
 
+import com.timkhakimov.tictactoe.Constants;
 import com.timkhakimov.tictactoe.game.model.Player;
 import com.timkhakimov.tictactoe.game.opponent.Opponent;
 import com.timkhakimov.tictactoe.game.opponent.computer.RandomMoveComputerOpponent;
+import com.timkhakimov.tictactoe.game.opponent.computer.bestmove.FindBestMoveComputerOpponent;
 
 /**
  * Created by Timur Khakimov on 18.09.2019
@@ -47,6 +49,11 @@ public class GameCreator {
     }
 
     private Opponent createComputerOpponent(int computerOpponentType, Game game, Player opponentPlayer) {
-        return new RandomMoveComputerOpponent(game, opponentPlayer);
+        switch (computerOpponentType) {
+            case Constants.Opponents.FIND_BEST_MOVE_USING_MINIMAX:
+                return new FindBestMoveComputerOpponent(game, opponentPlayer);
+            default:
+                return new RandomMoveComputerOpponent(game, opponentPlayer);
+        }
     }
 }

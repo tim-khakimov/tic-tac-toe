@@ -21,6 +21,7 @@
     <string name="computer_opponents">Computer opponents</string>
 
     <string name="single_player_random">Random move</string>
+    <string name="single_player_find_best_move_minimax">Find best move - minimax</string>
 
     <string name="choose_your_side">Choose your side</string>
     <string name="crosses">Crosses : X</string>

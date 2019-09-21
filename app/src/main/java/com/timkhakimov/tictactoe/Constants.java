@@ -11,5 +11,6 @@ public class Constants {
 
     public static class Opponents {
         public static final int RANDOM_MOVE = 1;
+        public static final int FIND_BEST_MOVE_USING_MINIMAX = 2;
     }
 }

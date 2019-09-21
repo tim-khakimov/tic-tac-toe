@@ -1,12 +1,10 @@
 package com.timkhakimov.tictactoe.fragments
 
 import android.view.View
-import android.widget.Toast
 import com.timkhakimov.tictactoe.Constants
 import com.timkhakimov.tictactoe.R
 import com.timkhakimov.tictactoe.databinding.FragmentStartBinding
 import com.timkhakimov.tictactoe.fragments.navigation.FragmentType
-import com.timkhakimov.tictactoe.game.model.Player
 
 /**
  * Created by Timur Khakimov on 19.09.2019
@@ -29,9 +27,16 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
             switchFragment(FragmentType.GAME)
         }
         binding.tvComputerOpponentRandomMove.setOnClickListener {
-            mainViewModel.setBoardSize(Constants.Board.SIZE_3)
-            mainViewModel.setComputerOpponentType(Constants.Opponents.RANDOM_MOVE)
-            switchFragment(FragmentType.CHOOSE_YOUR_SIDE)
+            setComputerOpponent(Constants.Opponents.RANDOM_MOVE)
         }
+        binding.tvComputerOpponentFindBestMoveMinimax.setOnClickListener {
+            setComputerOpponent(Constants.Opponents.FIND_BEST_MOVE_USING_MINIMAX)
+        }
+    }
+
+    private fun setComputerOpponent(computerOpponentType: Int) {
+        mainViewModel.setBoardSize(Constants.Board.SIZE_3)
+        mainViewModel.setComputerOpponentType(computerOpponentType)
+        switchFragment(FragmentType.CHOOSE_YOUR_SIDE)
     }
 }
