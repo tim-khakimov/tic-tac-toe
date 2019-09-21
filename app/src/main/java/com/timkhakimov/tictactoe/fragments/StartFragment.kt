@@ -26,12 +26,12 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
         binding.tvTwoPlayers.setOnClickListener {
             mainViewModel.setBoardSize(Constants.Board.SIZE_3)
             mainViewModel.startGame()
+            switchFragment(FragmentType.GAME)
         }
         binding.tvComputerOpponentRandomMove.setOnClickListener {
             mainViewModel.setBoardSize(Constants.Board.SIZE_3)
             mainViewModel.setComputerOpponentType(Constants.Opponents.RANDOM_MOVE)
-            mainViewModel.setOpponentPlayer(Player.NOUGHT)
-            mainViewModel.startGame()
+            switchFragment(FragmentType.CHOOSE_YOUR_SIDE)
         }
     }
 }

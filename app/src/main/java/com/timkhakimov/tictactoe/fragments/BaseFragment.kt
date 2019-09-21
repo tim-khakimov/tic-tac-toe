@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.timkhakimov.navigator.base.SwitchStateDirection
 import com.timkhakimov.navigator.support.SupportNavFragment
 import com.timkhakimov.tictactoe.fragments.navigation.FragmentType
@@ -70,5 +71,9 @@ abstract class BaseFragment<B : ViewDataBinding> : SupportNavFragment<FragmentTy
 
     override fun switchFragment(fragmentType: FragmentType, direction: SwitchStateDirection, bundle: Bundle?) {
         mainViewModel.switchFragment(fragmentType, direction, bundle)
+    }
+
+    protected fun toast(text : String) {
+        Toast.makeText(context, text, Toast.LENGTH_SHORT).show()
     }
 }

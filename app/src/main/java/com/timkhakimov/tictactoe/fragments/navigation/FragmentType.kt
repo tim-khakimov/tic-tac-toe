@@ -6,5 +6,6 @@ package com.timkhakimov.tictactoe.fragments.navigation
 enum class FragmentType {
     EMPTY,
     START,
+    CHOOSE_YOUR_SIDE,
     GAME
 }

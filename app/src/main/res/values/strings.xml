@@ -21,4 +21,9 @@
     <string name="computer_opponents">Computer opponents</string>
 
     <string name="single_player_random">Random move</string>
+
+    <string name="choose_your_side">Choose your side</string>
+    <string name="crosses">Crosses : X</string>
+    <string name="noughts">Noughts : O</string>
+    <string name="random">Random</string>
 </resources>

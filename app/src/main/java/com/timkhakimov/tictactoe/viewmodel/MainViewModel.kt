@@ -29,6 +29,5 @@ class MainViewModel : BaseViewModel() {
 
     fun startGame() {
         gameLiveData.value = gameCreator.create()
-        switchFragment(FragmentType.GAME)
     }
 }
