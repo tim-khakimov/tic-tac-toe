@@ -6,6 +6,7 @@ import com.timkhakimov.tictactoe.Constants
 import com.timkhakimov.tictactoe.R
 import com.timkhakimov.tictactoe.databinding.FragmentStartBinding
 import com.timkhakimov.tictactoe.fragments.navigation.FragmentType
+import com.timkhakimov.tictactoe.game.model.Player
 
 /**
  * Created by Timur Khakimov on 19.09.2019
@@ -23,8 +24,13 @@ class StartFragment : BaseFragment<FragmentStartBinding>() {
 
     override fun onViewCreated(root: View) {
         binding.tvTwoPlayers.setOnClickListener {
-            Toast.makeText(requireContext(), "START", Toast.LENGTH_SHORT).show()
             mainViewModel.setBoardSize(Constants.Board.SIZE_3)
+            mainViewModel.startGame()
+        }
+        binding.tvComputerOpponentRandomMove.setOnClickListener {
+            mainViewModel.setBoardSize(Constants.Board.SIZE_3)
+            mainViewModel.setComputerOpponentType(Constants.Opponents.RANDOM_MOVE)
+            mainViewModel.setOpponentPlayer(Player.NOUGHT)
             mainViewModel.startGame()
         }
     }

@@ -8,4 +8,8 @@ public class Constants {
     public static class Board {
         public static final int SIZE_3 = 3;
     }
+
+    public static class Opponents {
+        public static final int RANDOM_MOVE = 1;
+    }
 }

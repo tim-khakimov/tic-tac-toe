@@ -4,6 +4,7 @@ import android.arch.lifecycle.MutableLiveData
 import com.timkhakimov.tictactoe.fragments.navigation.FragmentType
 import com.timkhakimov.tictactoe.game.Game
 import com.timkhakimov.tictactoe.game.GameCreator
+import com.timkhakimov.tictactoe.game.model.Player
 
 /**
  * Created by Timur Khakimov on 18.09.2019
@@ -14,8 +15,16 @@ class MainViewModel : BaseViewModel() {
     val gameLiveData = MutableLiveData<Game>()
     private val gameCreator = GameCreator()
 
-    fun setBoardSize(size : Int) {
+    fun setBoardSize(size: Int) {
         gameCreator.setBoardSize(size)
+    }
+
+    fun setComputerOpponentType(computerOpponentType: Int) {
+        gameCreator.setComputerOpponentType(computerOpponentType)
+    }
+
+    fun setOpponentPlayer(opponentPlayer: Player) {
+        gameCreator.setOpponentPlayer(opponentPlayer)
     }
 
     fun startGame() {

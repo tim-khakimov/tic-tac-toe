@@ -17,4 +17,8 @@
     <string name="choose_mode">Choose mode</string>
 
     <string name="two_players">2 players</string>
+
+    <string name="computer_opponents">Computer opponents</string>
+
+    <string name="single_player_random">Random move</string>
 </resources>
