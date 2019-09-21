@@ -45,7 +45,7 @@ public class GameCell extends BaseObservable implements Point, PointObserver {
 
     @Bindable
     public boolean isAvailableForPlayer() {
-        return !game.isFinished() && getPlayerMark() == null;
+        return getPlayerMark() == null && game.getCurrentPlayer() != game.getOpponentPlayer() && !game.isFinished();
     }
 
     public void markCell() {

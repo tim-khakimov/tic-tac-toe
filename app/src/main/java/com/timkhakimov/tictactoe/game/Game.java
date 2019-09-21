@@ -25,11 +25,22 @@ public class Game implements PointObservable {
     private Cell[][] board;
     private Stack<PlayerMove> movesStack;
     private List<PointObserver> observers;
+    @Nullable
+    private Player opponentPlayer;
 
     public Game(@NonNull Cell[][] board) {
         this.board = board;
         movesStack = new Stack<>();
         observers = new ArrayList<>();
+    }
+
+    public void setOpponentPlayer(@Nullable Player opponentPlayer) {
+        this.opponentPlayer = opponentPlayer;
+    }
+
+    @Nullable
+    public Player getOpponentPlayer() {
+        return opponentPlayer;
     }
 
     public void markCell(int row, int column) {
