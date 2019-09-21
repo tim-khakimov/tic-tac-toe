@@ -57,8 +57,8 @@ public class GameCell extends BaseObservable implements Point, PointObserver {
 
     @Override
     public void update(int row, int column) {
+        notifyPropertyChanged(com.timkhakimov.tictactoe.BR.availableForPlayer);
         if (row == getRow() && column == getColumn()) {
-            notifyPropertyChanged(com.timkhakimov.tictactoe.BR.availableForPlayer);
             notifyPropertyChanged(com.timkhakimov.tictactoe.BR.playerMark);
         }
     }
