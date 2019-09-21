@@ -2,6 +2,11 @@ package com.timkhakimov.tictactoe.game;
 
 import com.timkhakimov.tictactoe.game.model.Cell;
 import com.timkhakimov.tictactoe.game.model.Player;
+import com.timkhakimov.tictactoe.game.model.Point;
+import com.timkhakimov.tictactoe.game.model.SimplePoint;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Timur Khakimov on 10.09.2019
@@ -17,6 +22,18 @@ public class GameUtils {
             }
         }
         return board;
+    }
+
+    public static List<Point> getEmptyPointsFromBoard(Cell[][] board) {
+        List<Point> points = new ArrayList<>();
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board[0].length; column++) {
+                if (board[row][column].getPlayerMark() == null) {
+                    points.add(new SimplePoint(row, column));
+                }
+            }
+        }
+        return points;
     }
 
     public static boolean isPlayerWon(Cell[][] board, Player player, int row, int column) {
