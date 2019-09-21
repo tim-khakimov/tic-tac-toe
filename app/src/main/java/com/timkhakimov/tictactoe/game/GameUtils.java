@@ -24,11 +24,32 @@ public class GameUtils {
         return board;
     }
 
+    public static Cell[][] copyBoard(Cell[][] board) {
+        Cell[][] copiedBoard = new Cell[board.length][board[0].length];
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board[0].length; column++) {
+                copiedBoard[row][column].setPlayerMark(board[row][column].getPlayerMark());
+            }
+        }
+        return copiedBoard;
+    }
+
+    public static boolean isBoardFilled(Cell[][] board) {
+        for (int row = 0; row < board.length; row++) {
+            for (int column = 0; column < board.length; column++) {
+                if(board[row][column].isEmpty()) {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
+
     public static List<Point> getEmptyPointsFromBoard(Cell[][] board) {
         List<Point> points = new ArrayList<>();
         for (int row = 0; row < board.length; row++) {
             for (int column = 0; column < board[0].length; column++) {
-                if (board[row][column].getPlayerMark() == null) {
+                if (board[row][column].isEmpty()) {
                     points.add(new SimplePoint(row, column));
                 }
             }
