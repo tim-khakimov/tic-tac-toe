@@ -1,5 +1,7 @@
 package com.timkhakimov.tictactoe.game.opponent.computer.bestmove;
 
+import android.support.annotation.NonNull;
+
 import com.timkhakimov.tictactoe.game.model.Point;
 
 /**
@@ -8,29 +10,26 @@ import com.timkhakimov.tictactoe.game.model.Point;
  */
 public class PointWithResult implements Point {
 
-    private int row;
-    private int column;
+    @NonNull
+    private Point point;
     public int result;
 
-    public PointWithResult(int row, int column, int result) {
-        this.row = row;
-        this.column = column;
-        this.result = result;
+    public PointWithResult(@NonNull Point point) {
+        this.point = point;
     }
 
-    public void setData(int row, int column, int result) {
-        this.row = row;
-        this.column = column;
+    public PointWithResult(@NonNull Point point, int result) {
+        this.point = point;
         this.result = result;
     }
 
     @Override
     public int getRow() {
-        return row;
+        return point.getRow();
     }
 
     @Override
     public int getColumn() {
-        return column;
+        return point.getColumn();
     }
 }

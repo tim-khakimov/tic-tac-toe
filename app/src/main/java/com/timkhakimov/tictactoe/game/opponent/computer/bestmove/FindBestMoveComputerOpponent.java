@@ -4,10 +4,19 @@ import com.timkhakimov.tictactoe.game.Game;
 import com.timkhakimov.tictactoe.game.GameUtils;
 import com.timkhakimov.tictactoe.game.model.Cell;
 import com.timkhakimov.tictactoe.game.model.Player;
+import com.timkhakimov.tictactoe.game.model.Point;
 import com.timkhakimov.tictactoe.game.opponent.computer.AbstractComputerOpponent;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+
+import io.reactivex.Observable;
+import io.reactivex.ObservableEmitter;
+import io.reactivex.ObservableOnSubscribe;
+import io.reactivex.android.schedulers.AndroidSchedulers;
+import io.reactivex.schedulers.Schedulers;
 
 /**
  * Created by Timur Khakimov on 21.09.2019
@@ -21,12 +30,44 @@ public class FindBestMoveComputerOpponent extends AbstractComputerOpponent {
 
     @Override
     protected void calculateNextMove(Cell[][] board) {
-        List<PointWithResult> pointWithResults = calculatePointsWithResultsUsingMinimax(board, getPlayer());
-        PointWithResult bestMove = getPointWithBestResult(pointWithResults, getPlayer());
-        markCell(bestMove.getRow(), bestMove.getColumn());
+        List<Point> inputs = GameUtils.getEmptyPointsFromBoard(board);
+        findBestVariantObservable(board, inputs)
+                .subscribeOn(Schedulers.newThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(new MoveObserver() {
+                    @Override
+                    public void onNext(Point point) {
+                        markCell(point.getRow(), point.getColumn());
+                    }
+                });
     }
 
-    private static PointWithResult getPointWithBestResult(List<PointWithResult> pointWithResults, Player player) {
+    private Observable<PointWithResult> findBestVariantObservable(Cell[][] board, List<Point> points) {
+        return Observable.create(new ObservableOnSubscribe<PointWithResult>() {
+            @Override
+            public void subscribe(ObservableEmitter<PointWithResult> emitter){
+                final int emptyPointsSize = points.size();
+                Player player = getPlayer();
+                int maxThreadsCount = Runtime.getRuntime().availableProcessors() - 1;
+                final ExecutorService threadPoolExecutor = Executors.newFixedThreadPool(emptyPointsSize > maxThreadsCount ? maxThreadsCount : emptyPointsSize);
+                try {
+                    Iterable<PointWithResult> pointWithResultIterable  = Observable.<Point>fromIterable(points)
+                            .flatMap((point) ->
+                                    Observable.defer(() ->
+                                            Observable.just(getPointWithResult(GameUtils.copyBoard(board), player, point, emptyPointsSize)))
+                                            .subscribeOn(Schedulers.from(threadPoolExecutor)))
+                            .blockingIterable();
+                    emitter.onNext(getPointWithBestResult(pointWithResultIterable, player));
+                    emitter.onComplete();
+                } catch (Exception e) {
+                    emitter.onError(e);
+                }
+                threadPoolExecutor.shutdown();
+            }
+        });
+    }
+
+    private static PointWithResult getPointWithBestResult(Iterable<PointWithResult> pointWithResults, Player player) {
         PointWithResult pointWithResult = null;
         for (PointWithResult point : pointWithResults) {
             if(pointWithResult == null || isOtherScoresPreferable(player, pointWithResult.result, point.result)) {
@@ -37,17 +78,18 @@ public class FindBestMoveComputerOpponent extends AbstractComputerOpponent {
     }
 
     private static List<PointWithResult> calculatePointsWithResultsUsingMinimax(Cell[][] board, Player player) {
-        List<PointWithResult> points = getEmptyPoints(board);
-        for (PointWithResult point : points) {
-            fillPointWithResult(board, player, point, points.size());
+        List<Point> points = GameUtils.getEmptyPointsFromBoard(board);
+        List<PointWithResult> pointWithResults = new ArrayList<>();
+        for (Point point : points) {
+            pointWithResults.add(getPointWithResult(board, player, point, points.size()));
         }
-        return points;
+        return pointWithResults;
     }
 
-    private static void fillPointWithResult(Cell[][] board, Player player, PointWithResult point, int emptyPointsSize) {
+    private static PointWithResult getPointWithResult(Cell[][] board, Player player, Point point, int emptyPointsSize) {
         int moveScores = getScoresSumForMove(board, player, point.getRow(), point.getColumn(), emptyPointsSize);
         board[point.getRow()][point.getColumn()].setPlayerMark(null);
-        point.result = moveScores;
+        return new PointWithResult(point, moveScores);
     }
 
     private static int getScoresSumForMove(Cell[][] board, Player player, int row, int column, int emptyPointsCount) {
@@ -78,17 +120,5 @@ public class FindBestMoveComputerOpponent extends AbstractComputerOpponent {
             return otherScores > currentScores;
         }
         return otherScores < currentScores;
-    }
-
-    private static List<PointWithResult> getEmptyPoints(Cell[][] board) {
-        List<PointWithResult> points = new ArrayList<>();
-        for (int row = 0; row < board.length; row++) {
-            for (int column = 0; column < board[0].length; column++) {
-                if(board[row][column].isEmpty()) {
-                    points.add(new PointWithResult(row, column, 0));
-                }
-            }
-        }
-        return points;
     }
 }

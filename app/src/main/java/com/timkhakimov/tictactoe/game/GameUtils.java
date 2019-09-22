@@ -25,7 +25,7 @@ public class GameUtils {
     }
 
     public static Cell[][] copyBoard(Cell[][] board) {
-        Cell[][] copiedBoard = new Cell[board.length][board[0].length];
+        Cell[][] copiedBoard = createBoard(board.length);
         for (int row = 0; row < board.length; row++) {
             for (int column = 0; column < board[0].length; column++) {
                 copiedBoard[row][column].setPlayerMark(board[row][column].getPlayerMark());
